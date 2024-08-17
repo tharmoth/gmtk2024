@@ -1,29 +1,103 @@
-[gd_scene load_steps=10 format=3 uid="uid://x3vypwnwtmqr"]
+[gd_scene load_steps=18 format=3 uid="uid://x3vypwnwtmqr"]
 
 [ext_resource type="Script" path="res://src/main.gd" id="1_xsm1h"]
+[ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="2_b41u0"]
 [ext_resource type="Script" path="res://src/ore_count.gd" id="2_q6a6p"]
 [ext_resource type="Texture2D" uid="uid://61v6h6rflyx" path="res://data/graphics/8k_stars_milky_way.jpg" id="2_wlnqk"]
-[ext_resource type="PackedScene" uid="uid://ueobdqydqfws" path="res://src/rock.tscn" id="3_6hwhc"]
+[ext_resource type="Script" path="res://src/fuel_button.gd" id="4_7hjcf"]
 [ext_resource type="Script" path="res://src/rock_spawner.gd" id="4_makek"]
 [ext_resource type="Script" path="res://src/building_button.gd" id="4_u7ln6"]
-[ext_resource type="Script" path="res://src/player.gd" id="7_hbnfn"]
-[ext_resource type="Texture2D" uid="uid://duo8263bb18k5" path="res://data/graphics/ship.png" id="8_yk47d"]
+[ext_resource type="Script" path="res://src/breaker_button.gd" id="6_tnp8y"]
+[ext_resource type="Script" path="res://src/station.gd" id="8_lfxs8"]
+[ext_resource type="AudioStream" uid="uid://dl3gjci86w5ne" path="res://data/sfx/laser4.wav" id="13_qlqde"]
+[ext_resource type="AudioStream" uid="uid://cmq07dx0vtcju" path="res://data/sfx/laser5.wav" id="14_dwnou"]
+[ext_resource type="AudioStream" uid="uid://dphfc4uhp7fv0" path="res://data/sfx/laser6.wav" id="15_w5imc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vx5wf"]
 size = Vector2(1007, 527)
+
+[sub_resource type="Animation" id="Animation_2i1g4"]
+resource_name = "shake"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-5, 0), Vector2(0, -5), Vector2(-5, 0), Vector2(0, 5), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.0349066, 0.0349066, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_mq7oh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xj34p"]
+_data = {
+"RESET": SubResource("Animation_mq7oh"),
+"shake": SubResource("Animation_2i1g4")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lanvn"]
+streams_count = 3
+stream_0/stream = ExtResource("13_qlqde")
+stream_1/stream = ExtResource("14_dwnou")
+stream_2/stream = ExtResource("15_w5imc")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_xsm1h")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = -1
+follow_viewport_enabled = true
 
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer2"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -547.0
-offset_right = 973.0
+offset_left = -111.0
+offset_top = -466.0
+offset_right = 862.0
+offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_wlnqk")
@@ -64,42 +138,21 @@ mouse_filter = 2
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+[node name="FuelButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
 layout_mode = 2
-text = "Pickaxe"
+text = "Buy Fuel"
+script = ExtResource("4_7hjcf")
+
+[node name="HaulerButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "`Nemo` Rock Hauler"
 script = ExtResource("4_u7ln6")
 
-[node name="Button2" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+[node name="BreakerButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
 layout_mode = 2
-text = "Ore Truck"
-script = ExtResource("4_u7ln6")
-
-[node name="Button3" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
-layout_mode = 2
-text = "Excivator"
-script = ExtResource("4_u7ln6")
-
-[node name="Button4" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
-layout_mode = 2
-text = "Strip Mine"
-script = ExtResource("4_u7ln6")
-
-[node name="Button5" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
-layout_mode = 2
-text = "Quarry"
-script = ExtResource("4_u7ln6")
-
-[node name="Rock" parent="." instance=ExtResource("3_6hwhc")]
-
-[node name="Player" type="Node2D" parent="."]
-position = Vector2(500, 345)
-script = ExtResource("7_hbnfn")
-
-[node name="Sprite2D" type="Sprite2D" parent="Player"]
-scale = Vector2(0.25, 0.25)
-texture = ExtResource("8_yk47d")
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
+text = "`Hulk` Rock Breaker"
+script = ExtResource("6_tnp8y")
 
 [node name="RockSpawner" type="Area2D" parent="."]
 script = ExtResource("4_makek")
@@ -107,3 +160,27 @@ script = ExtResource("4_makek")
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="RockSpawner"]
 position = Vector2(531.5, 362.5)
 shape = SubResource("RectangleShape2D_vx5wf")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(575, 323)
+
+[node name="ShakeCameraPlayer" type="AnimationPlayer" parent="Camera2D"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_xj34p")
+}
+speed_scale = 3.0
+
+[node name="Station" type="Node2D" parent="."]
+position = Vector2(532, 365)
+script = ExtResource("8_lfxs8")
+
+[node name="Sprite2D" type="Sprite2D" parent="Station"]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_b41u0")
+
+[node name="LaserPlayer" type="AudioStreamPlayer2D" parent="Station"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_lanvn")
+volume_db = -10.0

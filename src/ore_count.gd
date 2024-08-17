@@ -8,9 +8,11 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	var output : String = ""
 	
-	var production : float = 0.0
-	for building_button : BuildingButton in %BuildingButtons.get_children():
-		production += building_button.production * building_button.count
-		
-	text = str(int(Main.ore)) + " Ore\nper second: " + str(int(production))
+	output += str(int(Main.ore)) + " Ore\n"
+
+	if %HaulerButton.count > 0:
+		output += "Fuel: " + str(int(Main.fuel)) + "\n"
+	
+	text = output
