@@ -1,0 +1,83 @@
+[gd_scene load_steps=7 format=3 uid="uid://x3vypwnwtmqr"]
+
+[ext_resource type="Script" path="res://src/main.gd" id="1_xsm1h"]
+[ext_resource type="Script" path="res://src/ore_count.gd" id="2_q6a6p"]
+[ext_resource type="PackedScene" uid="uid://ueobdqydqfws" path="res://src/rock.tscn" id="3_6hwhc"]
+[ext_resource type="Script" path="res://src/rock_spawner.gd" id="4_makek"]
+[ext_resource type="Script" path="res://src/building_button.gd" id="4_u7ln6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vx5wf"]
+size = Vector2(1007, 527)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_xsm1h")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Control" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 2
+
+[node name="OreCount" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "250 ore
+Per Second: 1"
+horizontal_alignment = 1
+script = ExtResource("2_q6a6p")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="BuildingButtons" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+layout_mode = 2
+text = "Pickaxe"
+script = ExtResource("4_u7ln6")
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+layout_mode = 2
+text = "Ore Truck"
+script = ExtResource("4_u7ln6")
+
+[node name="Button3" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+layout_mode = 2
+text = "Excivator"
+script = ExtResource("4_u7ln6")
+
+[node name="Button4" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+layout_mode = 2
+text = "Strip Mine"
+script = ExtResource("4_u7ln6")
+
+[node name="Button5" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+layout_mode = 2
+text = "Quarry"
+script = ExtResource("4_u7ln6")
+
+[node name="Rock" parent="." instance=ExtResource("3_6hwhc")]
+
+[node name="RockSpawner" type="Area2D" parent="."]
+script = ExtResource("4_makek")
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="RockSpawner"]
+position = Vector2(531.5, 362.5)
+shape = SubResource("RectangleShape2D_vx5wf")
