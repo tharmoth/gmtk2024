@@ -3,16 +3,23 @@ class_name Rock extends Node2D
 var rotate : float = randf_range(-30, 30)
 var health : float = randi_range(2, 5)
 
+var angle : float
+var speed : float = randf_range(0.3, 0.8)
+
 func _ready() -> void:
 	$Area2D.input_event.connect(_clicked)
-	var tween = create_tween()
-	tween.set_ease(Tween.EASE_IN_OUT)
-	tween.set_trans(Tween.TRANS_SINE)
-	tween.tween_property(self, "global_position", global_position + Vector2(0, 20), 1.2)
-	tween.tween_property(self, "global_position", global_position, 1.2)
-	tween.set_loops()
-	add_to_group("rock")
+	var screen_center : Vector2 = get_viewport_rect().size / 2
+	angle = remap(get_angle_to(screen_center), -PI, PI, 0, 2*PI)
+	angle = angle-PI/8 if randi() % 2 else angle+PI/8
 	
+	#var tween = create_tween()
+	#tween.set_ease(Tween.EASE_IN_OUT)
+	#tween.set_trans(Tween.TRANS_SINE)
+	#tween.tween_property($Sprite2D, "position", Vector2.UP * 20, 1.2)
+	#tween.tween_property($Sprite2D, "position", Vector2.ZERO, 1.2)
+	#tween.set_loops()
+	add_to_group("rock")
+
 func _clicked(_viewport, event : InputEvent, _shape_idx) -> void:
 	if event.is_action_pressed("left_click"):
 		health -= 1
@@ -46,5 +53,11 @@ func _break_apart() -> void:
 	
 	Main.shake()
 
+func _on_visible_on_screen_notifier_2d_screen_exited():
+	queue_free()
+
 func _process(delta: float) -> void:
 	rotation_degrees += delta * rotate
+
+func _physics_process(delta):
+	position -= Vector2(1, 0).rotated(angle) * speed

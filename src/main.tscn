@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://x3vypwnwtmqr"]
+[gd_scene load_steps=20 format=3 uid="uid://x3vypwnwtmqr"]
 
 [ext_resource type="Script" path="res://src/main.gd" id="1_xsm1h"]
 [ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="2_b41u0"]
@@ -16,6 +16,39 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vx5wf"]
 size = Vector2(1007, 527)
+
+[sub_resource type="Curve2D" id="Curve2D_pq8h3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1152, 0, 0, 0, 0, 0, 1152, 648, 0, 0, 0, 0, 0, 648, 0, 0, 0, 0, 0, 0)
+}
+point_count = 4
+
+[sub_resource type="Animation" id="Animation_mq7oh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_2i1g4"]
 resource_name = "shake"
@@ -43,33 +76,6 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [0.0, -0.0349066, 0.0349066, 0.0]
-}
-
-[sub_resource type="Animation" id="Animation_mq7oh"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:offset")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath(".:rotation")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_xj34p"]
@@ -161,6 +167,13 @@ script = ExtResource("4_makek")
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="RockSpawner"]
 position = Vector2(531.5, 362.5)
 shape = SubResource("RectangleShape2D_vx5wf")
+
+[node name="RockSpawnPath" type="Path2D" parent="RockSpawner"]
+curve = SubResource("Curve2D_pq8h3")
+
+[node name="RockFollowLocation" type="PathFollow2D" parent="RockSpawner/RockSpawnPath"]
+position = Vector2(1152, 0)
+rotation = 1.5708
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(575, 323)

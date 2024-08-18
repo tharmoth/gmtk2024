@@ -23,16 +23,11 @@ func _spawn() -> void:
 	var rock_scene : PackedScene = load("res://src/rock.tscn")
 	var rock : Node2D = rock_scene.instantiate()
 	
-	var spawn_zone : RectangleShape2D = $CollisionPolygon2D.shape
-	var rect : Rect2 = spawn_zone.get_rect()
-	var x : float = randf_range(rect.position.x, spawn_zone.get_rect().end.x)
-	var y : float = randf_range(rect.position.y, spawn_zone.get_rect().end.y)
+	var rock_spawn_location = $RockSpawnPath/RockFollowLocation
+	rock_spawn_location.progress_ratio = randf()
+	rock.position = rock_spawn_location.position
 	
-	var pos = Vector2(x, y) + $CollisionPolygon2D.position
-	
-	rock.position = pos
 	rock.scale = Vector2.ZERO
-	rock.rotation_degrees = randf_range(0, 360)
 	var tween = rock.create_tween()
 	tween.tween_property(rock, "scale", Vector2.ONE * randf_range(.5, 1.5), .25)
 	
