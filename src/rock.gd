@@ -54,6 +54,14 @@ func _break_apart() -> void:
 	Main.shake()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
+	var timer = Timer.new()
+	timer.wait_time = 1.0
+	timer.autostart = true
+	timer.one_shot = true
+	timer.timeout.connect(_remove_rock)
+	call_deferred("add_child", timer)
+
+func _remove_rock():
 	queue_free()
 
 func _process(delta: float) -> void:

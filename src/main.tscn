@@ -19,9 +19,9 @@ size = Vector2(1007, 527)
 
 [sub_resource type="Curve2D" id="Curve2D_pq8h3"]
 _data = {
-"points": PackedVector2Array(0, 0, 0, 0, 1152, 0, 0, 0, 0, 0, 1152, 648, 0, 0, 0, 0, 0, 648, 0, 0, 0, 0, 0, 0)
+"points": PackedVector2Array(0, 0, 0, 0, 1152, 0, 0, 0, 0, 0, 1152, 648, 0, 0, 0, 0, 0, 648, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1152, 0)
 }
-point_count = 4
+point_count = 6
 
 [sub_resource type="Animation" id="Animation_mq7oh"]
 length = 0.001
@@ -172,8 +172,9 @@ shape = SubResource("RectangleShape2D_vx5wf")
 curve = SubResource("Curve2D_pq8h3")
 
 [node name="RockFollowLocation" type="PathFollow2D" parent="RockSpawner/RockSpawnPath"]
-position = Vector2(1152, 0)
+position = Vector2(1152, 648)
 rotation = 1.5708
+progress = 648.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(575, 323)
