@@ -1,18 +1,19 @@
-[gd_scene load_steps=20 format=3 uid="uid://x3vypwnwtmqr"]
+[gd_scene load_steps=21 format=3 uid="uid://x3vypwnwtmqr"]
 
-[ext_resource type="Script" path="res://src/main.gd" id="1_xsm1h"]
-[ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="2_b41u0"]
-[ext_resource type="Script" path="res://src/ore_count.gd" id="2_q6a6p"]
-[ext_resource type="Texture2D" uid="uid://61v6h6rflyx" path="res://data/graphics/8k_stars_milky_way.jpg" id="2_wlnqk"]
-[ext_resource type="Script" path="res://src/fuel_button.gd" id="4_7hjcf"]
-[ext_resource type="Script" path="res://src/rock_spawner.gd" id="4_makek"]
-[ext_resource type="Script" path="res://src/building_button.gd" id="4_u7ln6"]
-[ext_resource type="Script" path="res://src/breaker_button.gd" id="6_tnp8y"]
-[ext_resource type="Script" path="res://src/station.gd" id="8_lfxs8"]
-[ext_resource type="Script" path="res://src/mouse_manager.gd" id="13_c8bd1"]
-[ext_resource type="AudioStream" uid="uid://dl3gjci86w5ne" path="res://data/sfx/laser4.wav" id="13_qlqde"]
-[ext_resource type="AudioStream" uid="uid://cmq07dx0vtcju" path="res://data/sfx/laser5.wav" id="14_dwnou"]
-[ext_resource type="AudioStream" uid="uid://dphfc4uhp7fv0" path="res://data/sfx/laser6.wav" id="15_w5imc"]
+[ext_resource type="Script" path="res://src/scripts/main.gd" id="1_2205f"]
+[ext_resource type="Texture2D" uid="uid://61v6h6rflyx" path="res://data/graphics/8k_stars_milky_way.jpg" id="2_6kn2d"]
+[ext_resource type="Script" path="res://src/scripts/ore_count.gd" id="3_3egk6"]
+[ext_resource type="Script" path="res://src/scripts/fuel_button.gd" id="4_rp3vk"]
+[ext_resource type="Script" path="res://src/scripts/hangar_button.gd" id="5_tv46s"]
+[ext_resource type="Script" path="res://src/scripts/building_button.gd" id="6_yw1qk"]
+[ext_resource type="Script" path="res://src/scripts/breaker_button.gd" id="7_mjd0i"]
+[ext_resource type="Script" path="res://src/rock_spawner.gd" id="8_6amtf"]
+[ext_resource type="Script" path="res://src/station.gd" id="9_fax0r"]
+[ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="10_pag6l"]
+[ext_resource type="AudioStream" uid="uid://dl3gjci86w5ne" path="res://data/sfx/laser4.wav" id="11_jxb6i"]
+[ext_resource type="AudioStream" uid="uid://cmq07dx0vtcju" path="res://data/sfx/laser5.wav" id="12_2dfch"]
+[ext_resource type="AudioStream" uid="uid://dphfc4uhp7fv0" path="res://data/sfx/laser6.wav" id="13_snstg"]
+[ext_resource type="Script" path="res://src/scripts/mouse_manager.gd" id="14_0dqjr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vx5wf"]
 size = Vector2(1007, 527)
@@ -86,12 +87,12 @@ _data = {
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lanvn"]
 streams_count = 3
-stream_0/stream = ExtResource("13_qlqde")
-stream_1/stream = ExtResource("14_dwnou")
-stream_2/stream = ExtResource("15_w5imc")
+stream_0/stream = ExtResource("11_jxb6i")
+stream_1/stream = ExtResource("12_2dfch")
+stream_2/stream = ExtResource("13_snstg")
 
 [node name="Main" type="Node2D"]
-script = ExtResource("1_xsm1h")
+script = ExtResource("1_2205f")
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="."]
 layer = -1
@@ -107,7 +108,7 @@ offset_right = 862.0
 offset_bottom = 81.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_wlnqk")
+texture = ExtResource("2_6kn2d")
 expand_mode = 2
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
@@ -131,7 +132,7 @@ layout_mode = 2
 text = "250 ore
 Per Second: 1"
 horizontal_alignment = 1
-script = ExtResource("2_q6a6p")
+script = ExtResource("3_3egk6")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
 layout_mode = 2
@@ -147,22 +148,31 @@ layout_mode = 2
 
 [node name="FuelButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
 layout_mode = 2
-text = "Buy Monopropellant"
-script = ExtResource("4_7hjcf")
+text = "Fuel Refining
+(1 Ore to 10 Fuel / sec)"
+script = ExtResource("4_rp3vk")
+
+[node name="HangarButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Upgrade Hangar"
+script = ExtResource("5_tv46s")
 
 [node name="HaulerButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "`Nemo` Rock Hauler"
-script = ExtResource("4_u7ln6")
+script = ExtResource("6_yw1qk")
 
 [node name="BreakerButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
 layout_mode = 2
 text = "`Hulk` Rock Breaker"
-script = ExtResource("6_tnp8y")
+script = ExtResource("7_mjd0i")
 
 [node name="RockSpawner" type="Area2D" parent="."]
-script = ExtResource("4_makek")
+script = ExtResource("8_6amtf")
+max_rocks = 30
+max_small_rocks = 100
 
 [node name="CollisionPolygon2D" type="CollisionShape2D" parent="RockSpawner"]
 position = Vector2(531.5, 362.5)
@@ -188,12 +198,12 @@ speed_scale = 3.0
 
 [node name="Station" type="Node2D" parent="."]
 position = Vector2(532, 365)
-script = ExtResource("8_lfxs8")
+script = ExtResource("9_fax0r")
 
 [node name="Sprite2D" type="Sprite2D" parent="Station"]
 modulate = Color(1, 0, 0, 1)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_b41u0")
+texture = ExtResource("10_pag6l")
 
 [node name="LaserPlayer" type="AudioStreamPlayer2D" parent="Station"]
 unique_name_in_owner = true
@@ -201,4 +211,4 @@ stream = SubResource("AudioStreamRandomizer_lanvn")
 volume_db = -10.0
 
 [node name="MouseManager" type="Node" parent="."]
-script = ExtResource("13_c8bd1")
+script = ExtResource("14_0dqjr")

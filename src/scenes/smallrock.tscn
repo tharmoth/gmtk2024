@@ -1,17 +1,17 @@
 [gd_scene load_steps=4 format=3 uid="uid://b1s6dt43qpg64"]
 
-[ext_resource type="Script" path="res://src/small_rock.gd" id="1_5w4u2"]
-[ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="2_smrys"]
-[ext_resource type="Script" path="res://src/mouseover_area.gd" id="3_vr0ry"]
+[ext_resource type="Script" path="res://src/scripts/small_rock.gd" id="1_aicpt"]
+[ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="2_2mqe2"]
+[ext_resource type="Script" path="res://src/scripts/mouseover_area.gd" id="3_y2ycp"]
 
 [node name="Rock" type="Node2D"]
-script = ExtResource("1_5w4u2")
+script = ExtResource("1_aicpt")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_smrys")
+texture = ExtResource("2_2mqe2")
 
 [node name="Area2D" type="Area2D" parent="."]
-script = ExtResource("3_vr0ry")
+script = ExtResource("3_y2ycp")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 scale = Vector2(2, 2)

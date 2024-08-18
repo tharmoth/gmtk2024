@@ -1,0 +1,214 @@
+[gd_scene load_steps=21 format=3 uid="uid://x3vypwnwtmqr"]
+
+[ext_resource type="Script" path="res://src/scripts/main.gd" id="1_2205f"]
+[ext_resource type="Texture2D" uid="uid://61v6h6rflyx" path="res://data/graphics/8k_stars_milky_way.jpg" id="2_6kn2d"]
+[ext_resource type="Script" path="res://src/scripts/ore_count.gd" id="3_3egk6"]
+[ext_resource type="Script" path="res://src/scripts/fuel_button.gd" id="4_rp3vk"]
+[ext_resource type="Script" path="res://src/scripts/hangar_button.gd" id="5_tv46s"]
+[ext_resource type="Script" path="res://src/scripts/building_button.gd" id="6_yw1qk"]
+[ext_resource type="Script" path="res://src/scripts/breaker_button.gd" id="7_mjd0i"]
+[ext_resource type="Script" path="res://src/scripts/rock_spawner.gd" id="8_6amtf"]
+[ext_resource type="Script" path="res://src/scripts/station.gd" id="9_fax0r"]
+[ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="10_pag6l"]
+[ext_resource type="AudioStream" uid="uid://dl3gjci86w5ne" path="res://data/sfx/laser4.wav" id="11_jxb6i"]
+[ext_resource type="AudioStream" uid="uid://cmq07dx0vtcju" path="res://data/sfx/laser5.wav" id="12_2dfch"]
+[ext_resource type="AudioStream" uid="uid://dphfc4uhp7fv0" path="res://data/sfx/laser6.wav" id="13_snstg"]
+[ext_resource type="Script" path="res://src/scripts/mouse_manager.gd" id="14_0dqjr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vx5wf"]
+size = Vector2(1007, 527)
+
+[sub_resource type="Curve2D" id="Curve2D_pq8h3"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1152, 0, 0, 0, 0, 0, 1152, 648, 0, 0, 0, 0, 0, 648, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1152, 0)
+}
+point_count = 6
+
+[sub_resource type="Animation" id="Animation_mq7oh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_2i1g4"]
+resource_name = "shake"
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-5, 0), Vector2(0, -5), Vector2(-5, 0), Vector2(0, 5), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.0349066, 0.0349066, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xj34p"]
+_data = {
+"RESET": SubResource("Animation_mq7oh"),
+"shake": SubResource("Animation_2i1g4")
+}
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_lanvn"]
+streams_count = 3
+stream_0/stream = ExtResource("11_jxb6i")
+stream_1/stream = ExtResource("12_2dfch")
+stream_2/stream = ExtResource("13_snstg")
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_2205f")
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="."]
+layer = -1
+follow_viewport_enabled = true
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer2"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -111.0
+offset_top = -466.0
+offset_right = 862.0
+offset_bottom = 81.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_6kn2d")
+expand_mode = 2
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="MarginContainer" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 2
+
+[node name="OreCount" type="Label" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+text = "250 ore
+Per Second: 1"
+horizontal_alignment = 1
+script = ExtResource("3_3egk6")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="BuildingButtons" type="VBoxContainer" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="FuelButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+layout_mode = 2
+text = "Fuel Refining
+(1 Ore to 10 Fuel / sec)"
+script = ExtResource("4_rp3vk")
+
+[node name="HangarButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Upgrade Hangar"
+script = ExtResource("5_tv46s")
+
+[node name="HaulerButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "`Nemo` Rock Hauler"
+script = ExtResource("6_yw1qk")
+
+[node name="BreakerButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
+layout_mode = 2
+text = "`Hulk` Rock Breaker"
+script = ExtResource("7_mjd0i")
+
+[node name="RockSpawner" type="Area2D" parent="."]
+script = ExtResource("8_6amtf")
+max_rocks = 30
+max_small_rocks = 100
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="RockSpawner"]
+position = Vector2(531.5, 362.5)
+shape = SubResource("RectangleShape2D_vx5wf")
+
+[node name="RockSpawnPath" type="Path2D" parent="RockSpawner"]
+curve = SubResource("Curve2D_pq8h3")
+
+[node name="RockFollowLocation" type="PathFollow2D" parent="RockSpawner/RockSpawnPath"]
+position = Vector2(1152, 648)
+rotation = 1.5708
+progress = 648.0
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(575, 323)
+
+[node name="ShakeCameraPlayer" type="AnimationPlayer" parent="Camera2D"]
+unique_name_in_owner = true
+libraries = {
+"": SubResource("AnimationLibrary_xj34p")
+}
+speed_scale = 3.0
+
+[node name="Station" type="Node2D" parent="."]
+position = Vector2(532, 365)
+script = ExtResource("9_fax0r")
+
+[node name="Sprite2D" type="Sprite2D" parent="Station"]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("10_pag6l")
+
+[node name="LaserPlayer" type="AudioStreamPlayer2D" parent="Station"]
+unique_name_in_owner = true
+stream = SubResource("AudioStreamRandomizer_lanvn")
+volume_db = -10.0
+
+[node name="MouseManager" type="Node" parent="."]
+script = ExtResource("14_0dqjr")

@@ -21,12 +21,12 @@ func _ready() -> void:
 	call_deferred("add_child", timer)
 
 func _spawn() -> void:
-	timer.wait_time = randf_range(1.0, 5.0)
+	timer.wait_time = randf_range(0.0, 3.0)
 	
 	if len(get_tree().get_nodes_in_group("rock")) - 1 >= max_rocks or len(get_tree().get_nodes_in_group("small_rock")) > max_small_rocks:
 		return
 	
-	var rock_scene : PackedScene = load("res://src/rock.tscn")
+	var rock_scene : PackedScene = load("res://src/scenes/rock.tscn")
 	var rock : Node2D = rock_scene.instantiate()
 	
 	var rock_spawn_location = $RockSpawnPath/RockFollowLocation
@@ -46,20 +46,16 @@ func decide_rock_position():
 	print(old_progress_ratio)
 	
 	if old_progress_ratio >= 0.0 and  old_progress_ratio <= FIRST_CORNER:
-		print("First Range!")
 		rock_spawn_location.progress_ratio = randf_range(FIRST_CORNER, 1.0)
 	elif old_progress_ratio >= FIRST_CORNER and old_progress_ratio <= SECOND_CORNER:
-		print("Second Range!")
 		if randi_range(1 , 3) == 1:
 			rock_spawn_location.progress_ratio = randf_range(0.0, FIRST_CORNER)
 		else:
 			rock_spawn_location.progress_ratio = randf_range(SECOND_CORNER, 1)
 	elif old_progress_ratio >= SECOND_CORNER and old_progress_ratio <= THIRD_CORNER:
-		print("Third Range!")
 		if randi_range(1 , 3) == 3:
 			rock_spawn_location.progress_ratio = randf_range(0.0, SECOND_CORNER)
 		else:
 			rock_spawn_location.progress_ratio = randf_range(THIRD_CORNER, 1)
 	else:
-		print("Fourth Range!")
 		rock_spawn_location.progress_ratio = randf_range(0.0, THIRD_CORNER)

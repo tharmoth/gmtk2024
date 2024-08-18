@@ -35,7 +35,7 @@ func collect() -> void:
 		_break_apart()
 
 func _break_apart() -> void:
-	var rock_scene : PackedScene = load("res://src/smallrock.tscn")
+	var rock_scene : PackedScene = load("res://src/scenes/smallrock.tscn")
 	var rock : Node2D = rock_scene.instantiate()
 
 	var x : float = randf_range(-20, 20)

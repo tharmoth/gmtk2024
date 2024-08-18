@@ -2,7 +2,7 @@ extends Label
 
 var last : float= 0
 var _samples : Array[float] = []
-var seconds_to_sample : float = 3
+var seconds_to_sample : float = 30
 var samples_per_second : int = 10
 
 # Called when the node enters the scene tree for the first time.
@@ -30,7 +30,6 @@ func _process(delta: float) -> void:
 		output += "Fuel: " + str(int(Main.fuel)) + "\n"
 		
 	
-	
 	text = output
 
 func _sample() -> void:
@@ -38,7 +37,6 @@ func _sample() -> void:
 	if current < last:
 		last = current
 		return
-	
 	
 	_samples.append(current - last)
 	last = current

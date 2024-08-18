@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://dujwc41afg3f0"]
+
+[ext_resource type="Script" path="res://src/rock.gd" id="1_6vplx"]
+[ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="2_epa3c"]
+[ext_resource type="Script" path="res://src/scripts/mouseover_area.gd" id="3_ypf4f"]
+
+[node name="Rock" type="Node2D"]
+script = ExtResource("1_6vplx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_epa3c")
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_ypf4f")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
+polygon = PackedVector2Array(-12.9, -59.3, -15, -58.2, -19.3, -57, -26.2, -57, -33, -43.5, -33, -41.9, -40.7, -35, -42.2, -35, -47.2, -25, -49.2, -25, -47, -0.800003, -47, 8.5, -50, 16.6, -50, 22.4, -43, 39.3, -43, 42.1, -29, 51.1, -29, 53, -8.6, 53, 4, 48.4, 22.1, 47, 24.6, 47, 40, 37.1, 48.4, 35, 51.3, 35, 56.3, 24, 58, 24, 58, 10.3, 43.9, -6, 42, -41.1, 42, -44.2, 24, -53.3, 24, -55.8, 9.7, -51, -0.400002, -51)
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

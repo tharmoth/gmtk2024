@@ -1,9 +1,11 @@
-class_name BreakerButton extends Button
+class_name BuildingButton extends Button
 
 @export
-var cost : float = 1500.0
+var cost : float = 100.0
 @export
 var production : float = 1.0
+@export
+var space_taken : int = 1
 var count : int = 0
 var _type : String
 var _timer : Timer = Timer.new()
@@ -17,38 +19,38 @@ func _ready() -> void:
 	_timer.wait_time = 1
 	_timer.timeout.connect(_collect_ore)
 	#call_deferred("add_child", _timer)
-	
-	visible = false
 
 func _pressed() -> void:
-	if Main.ore >= cost:
+	if Main.ore >= cost and Main.available_hangar_space() >= space_taken:
 		Main.ore -= cost
-		cost *= 1.72
+		Main.occupied_hangar_space += space_taken
+		%HangarButton._update()
 		count += 1
 		_update()
-		_timer.wait_time = 5 / count
+		_timer.wait_time = 2.5 / count
 		
 		_timer.start()
 		
-		var scene = preload("res://src/hulk.tscn")
+		var scene = preload("res://src/scenes/nemo.tscn")
 		var ship = scene.instantiate()
 		ship.position = Station.instance.global_position
 		Station.instance.add_sibling(ship)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	visible = Main.ore > cost / 10 or count > 0 or visible
-	disabled = Main.ore < cost
+	visible = Main.ore > cost or count > 0
+	disabled = Main.ore < cost or Main.available_hangar_space() < space_taken
 
 func _update() -> void:
-	text = _type + "\nCount: " + str(count)  + "\nCost: " + str(int(cost))
+	text = _type + "\nCount: " + str(count) \
+		+ "\nSpace: " + str(space_taken) + "\nCost: " + str(int(cost))
 	
 func _collect_ore() -> void:
-	var nodes = get_tree().get_nodes_in_group("rock")
+	var nodes = get_tree().get_nodes_in_group("small_rock")
 	if len(nodes) <= 0:
 		return
-	if Main.fuel < 50:
+	if Main.fuel < 10:
 		return
-	Main.fuel -= 50
+	Main.fuel -= 10
 	var node = nodes[randi_range(0, len(nodes) - 1)]
 	node.collect()
