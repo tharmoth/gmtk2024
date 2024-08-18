@@ -32,5 +32,5 @@ func _update() -> void:
 	text = _type + "\nCost: " + str(int(cost))
 	
 func _update_prices() -> void:
-	cost = randi_range(200, 400)
+	cost = randi_range(200, 1000)
 	_update()
