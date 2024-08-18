@@ -12,7 +12,7 @@ func _ready() -> void:
 	_update_prices()
 	
 	var timer = Timer.new()
-	timer.wait_time = 1.33
+	timer.wait_time = 3.33
 	timer.autostart = true
 	timer.one_shot = false
 	timer.timeout.connect(_update_prices)
