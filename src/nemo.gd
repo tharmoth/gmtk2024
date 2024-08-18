@@ -2,7 +2,7 @@ extends Node2D
 
 var target : Node2D
 var fuel_per_second : float = 1.0
-var rotate : float = randf_range(-10, 10)
+var rotate : float = randf_range(-20, 20)
 var speed : float = 100
 
 # Called when the node enters the scene tree for the first time.
