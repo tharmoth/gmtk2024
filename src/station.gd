@@ -1,9 +1,16 @@
-extends Node2D
+class_name Station extends Node2D
 
+static var instance
+
+func _ready() -> void:
+	instance = self
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if Input.is_action_just_pressed("left_click"):
+		var mouse_object = MouseManager.peek()
+		if mouse_object != null and mouse_object.get_parent() is SmallRock:
+			mouse_object.get_parent().collect()
 		_draw_line(global_position, get_global_mouse_position())
 		%LaserPlayer.play()
 

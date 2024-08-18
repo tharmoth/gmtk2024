@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dvvoh8lm58aev"]
+[gd_scene load_steps=4 format=3 uid="uid://dvvoh8lm58aev"]
 
 [ext_resource type="Script" path="res://src/small_rock.gd" id="1_5w4u2"]
 [ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="2_smrys"]
+[ext_resource type="Script" path="res://src/mouseover_area.gd" id="3_vr0ry"]
 
 [node name="Rock" type="Node2D"]
 script = ExtResource("1_5w4u2")
@@ -10,6 +11,7 @@ script = ExtResource("1_5w4u2")
 texture = ExtResource("2_smrys")
 
 [node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("3_vr0ry")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
 scale = Vector2(2, 2)

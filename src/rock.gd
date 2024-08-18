@@ -1,4 +1,4 @@
-extends Node2D
+class_name Rock extends Node2D
 
 var rotate : float = randf_range(-30, 30)
 var health : float = randi_range(2, 5)

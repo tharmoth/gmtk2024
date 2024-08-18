@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://x3vypwnwtmqr"]
+[gd_scene load_steps=19 format=3 uid="uid://x3vypwnwtmqr"]
 
 [ext_resource type="Script" path="res://src/main.gd" id="1_xsm1h"]
 [ext_resource type="Texture2D" uid="uid://b1ps8tyvs2b7r" path="res://data/graphics/rock.png" id="2_b41u0"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://src/building_button.gd" id="4_u7ln6"]
 [ext_resource type="Script" path="res://src/breaker_button.gd" id="6_tnp8y"]
 [ext_resource type="Script" path="res://src/station.gd" id="8_lfxs8"]
+[ext_resource type="Script" path="res://src/mouse_manager.gd" id="13_c8bd1"]
 [ext_resource type="AudioStream" uid="uid://dl3gjci86w5ne" path="res://data/sfx/laser4.wav" id="13_qlqde"]
 [ext_resource type="AudioStream" uid="uid://cmq07dx0vtcju" path="res://data/sfx/laser5.wav" id="14_dwnou"]
 [ext_resource type="AudioStream" uid="uid://dphfc4uhp7fv0" path="res://data/sfx/laser6.wav" id="15_w5imc"]
@@ -140,7 +141,7 @@ layout_mode = 2
 
 [node name="FuelButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
 layout_mode = 2
-text = "Buy Fuel"
+text = "Buy Monopropellant"
 script = ExtResource("4_7hjcf")
 
 [node name="HaulerButton" type="Button" parent="CanvasLayer/Control/VBoxContainer/HBoxContainer/BuildingButtons"]
@@ -184,3 +185,6 @@ texture = ExtResource("2_b41u0")
 unique_name_in_owner = true
 stream = SubResource("AudioStreamRandomizer_lanvn")
 volume_db = -10.0
+
+[node name="MouseManager" type="Node" parent="."]
+script = ExtResource("13_c8bd1")

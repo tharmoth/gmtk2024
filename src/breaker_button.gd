@@ -1,7 +1,7 @@
 class_name BreakerButton extends Button
 
 @export
-var cost : float = 5000.0
+var cost : float = 1500.0
 @export
 var production : float = 1.0
 var count : int = 0

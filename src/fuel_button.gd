@@ -29,7 +29,7 @@ func _pressed() -> void:
 		_update()
 		
 func _update() -> void:
-	text = _type + "\nCount: " + str(count)  + "\nCost: " + str(int(cost))
+	text = _type + "\nCost: " + str(int(cost))
 	
 func _update_prices() -> void:
 	cost = randi_range(200, 400)
