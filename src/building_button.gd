@@ -16,7 +16,7 @@ func _ready() -> void:
 	_timer.one_shot = false
 	_timer.wait_time = 1
 	_timer.timeout.connect(_collect_ore)
-	call_deferred("add_child", _timer)
+	#call_deferred("add_child", _timer)
 
 func _pressed() -> void:
 	if Main.ore >= cost:
@@ -27,6 +27,11 @@ func _pressed() -> void:
 		_timer.wait_time = 2.5 / count
 		
 		_timer.start()
+		
+		var scene = preload("res://src/nemo.tscn")
+		var ship = scene.instantiate()
+		ship.position = Station.instance.global_position
+		Station.instance.add_sibling(ship)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

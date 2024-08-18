@@ -2,6 +2,7 @@ class_name SmallRock extends Node2D
 
 var rotate : float = randf_range(-30, 30)
 var collecting : bool = false
+var speed : float = 100.0
 
 func _ready() -> void:
 	var tween = create_tween()
@@ -19,7 +20,7 @@ func _process(delta: float) -> void:
 	rotation_degrees += delta * rotate
 	if collecting:
 		var direction = global_position.direction_to(Station.instance.global_position)
-		global_position += direction * delta * 200
+		global_position += direction * delta * speed
 		
 		if global_position.distance_to(Station.instance.global_position) < 10:
 			var amount : int = randi_range(5, 15)
